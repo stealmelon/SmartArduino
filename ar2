@@ -1,0 +1,47 @@
+void setup() {
+  Serial.begin(9600);
+  pinMode(13, OUTPUT);
+}
+void loop() {
+  int MosCode[36][5] = {{1,2},{2,1,1,1},{2,1,2,1},{2,1,1},{1},{1,1,2,1},{2,2,1},
+  {1,1,1,1},{1,1},{1,2,2,2},{2,1,2},{1,2,1,1},{2,2},{2,1},
+  {2,2,2},{1,2,2,1},{2,2,1,2},{1,2,1},{1,1,1},{2},
+  {1,1,2},{1,1,1,2},{1,2,2},{2,1,1,2},{2,1,2,2},{2,2,1,1},
+  {2,2,2,2,2},{1,2,2,2,2},{1,1,2,2,2},{1,1,1,2,2},{1,1,1,1,2},
+  {1,1,1,1,1},{2,1,1,1,1},{2,2,1,1,1},{2,2,2,1,1},{2,2,2,2,1}
+  };//1为短闪，2为长闪
+  String myString = "Hello";
+  int flag = 0;//数组下标
+  
+  for(int i = 0; i < myString.length(); i++)
+  {
+      if(myString[i] >= '0' && myString[i] <= '9')
+        flag = myString[i] - '0' + 26;
+      else
+        flag = myString[i] - 'A';
+        
+        if(flag >= 32)
+          flag -= 32;
+          
+      for(int j = 0; j < 5; j++)
+      {
+        if(MosCode[flag][j] == 1)
+        {
+          digitalWrite(13, HIGH);
+          delay(250);
+          digitalWrite(13, LOW);
+          delay(1000);
+        }
+        else if(MosCode[flag][j] == 2)
+        {
+          digitalWrite(13, HIGH);
+          delay(1000);
+          digitalWrite(13, LOW);
+          delay(1000);
+        }
+        else
+          break;
+      }
+  }
+  delay(1000);
+}
